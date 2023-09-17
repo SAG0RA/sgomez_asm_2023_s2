@@ -69,68 +69,71 @@ def manipulate_phase_shift():
 
 
 def manipulate_phase_cuadratico():
-    
-    # Crear un vector de desfase cuadrático
-    t = np.arange(len(audio_data)) / sample_rate
-    cuadratic_phase = 2 * t**2
+    if original_spec is not None:
+        # Crear un vector de desfase cuadrático
+        t = np.arange(len(audio_data)) / sample_rate
+        cuadratic_phase = 2 * t**2
 
-    # Aplicar el desfase cuadrático a la fase de la señal
-    fase_audio = np.angle(np.fft.fft(audio_data))
-    fase_audio_modificada = fase_audio + cuadratic_phase
+        # Aplicar el desfase cuadrático a la fase de la señal
+        fase_audio = np.angle(np.fft.fft(audio_data))
+        fase_audio_modificada = fase_audio + cuadratic_phase
 
-    # Reconstruir la señal en el dominio del tiempo
-    audio_data_modificado = np.fft.ifft(
+        # Reconstruir la señal en el dominio del tiempo
+        audio_data_modificado = np.fft.ifft(
         np.abs(np.fft.fft(audio_data)) * np.exp(1j * fase_audio_modificada))
 
-    # Configuración de la representación gráfica del espectrograma modificado
-    plt.figure()
-    duration = len(audio_data_modificado) / int(2000 * sample_rate)
+        # Configuración de la representación gráfica del espectrograma modificado
+        plt.figure()
+        duration = len(audio_data_modificado) / int(2000 * sample_rate)
 
-    # Tamaño de ventana igual a la duración total en muestras
-    nfft = int(duration * sample_rate)
-    overlap = 512
+        # Tamaño de ventana igual a la duración total en muestras
+        nfft = int(duration * sample_rate)
+        overlap = 512
 
-    plt.specgram(audio_data_modificado, NFFT=nfft, Fs=sample_rate,
+        plt.specgram(audio_data_modificado, NFFT=nfft, Fs=sample_rate,
                  noverlap=overlap, cmap='hot')
-    plt.xlabel('Tiempo (s)')
-    plt.ylabel('Frecuencia (Hz)')
-    plt.title('Espectrograma de la Señal de Audio con Fase Modificada')
-    plt.colorbar(label='Intensidad (dB)')
+        plt.xlabel('Tiempo (s)')
+        plt.ylabel('Frecuencia (Hz)')
+        plt.title('Espectrograma de la Señal de Audio con Fase Modificada')
+        plt.colorbar(label='Intensidad (dB)')
 
-    # Muestra el espectrograma modificado en una ventana separada
-    plt.show()
+        # Muestra el espectrograma modificado en una ventana separada
+        plt.show()
+    else:
+        print("Primero debes generar el espectrograma original.")
 
 def manipulate_phase_flanger():
-    depth = 0.4
-    rate = 1
-     # Crear un vector de tiempo
-    tiempo = np.arange(len(audio_data)) / sample_rate
+    if original_spec is not None:
+        depth = 0.4
+        rate = 1
+        # Crear un vector de tiempo
+        tiempo = np.arange(len(audio_data)) / sample_rate
 
-    # Crear la señal moduladora sinusoidal
-    moduladora = 1 + depth * np.sin(2 * np.pi * rate * tiempo)
+        # Crear la señal moduladora sinusoidal
+        moduladora = 1 + depth * np.sin(2 * np.pi * rate * tiempo)
 
-    # Aplicar el efecto flanger multiplicando la señal por la señal moduladora
-    audio_data_modificado = audio_data * moduladora
+        # Aplicar el efecto flanger multiplicando la señal por la señal moduladora
+        audio_data_modificado = audio_data * moduladora
 
-    # Configuración de la representación gráfica del espectrograma modificado
-    plt.figure()
-    duration = len(audio_data_modificado) / int(2000 * sample_rate)
+        # Configuración de la representación gráfica del espectrograma modificado
+        plt.figure()
+        duration = len(audio_data_modificado) / int(2000 * sample_rate)
 
-    # Tamaño de ventana igual a la duración total en muestras
-    nfft = int(duration * sample_rate)
-    overlap = 512
+        # Tamaño de ventana igual a la duración total en muestras
+        nfft = int(duration * sample_rate)
+        overlap = 512
 
-    plt.specgram(audio_data_modificado, NFFT=nfft, Fs=sample_rate,
+        plt.specgram(audio_data_modificado, NFFT=nfft, Fs=sample_rate,
                  noverlap=overlap, cmap='viridis')
-    plt.xlabel('Tiempo (s)')
-    plt.ylabel('Frecuencia (Hz)')
-    plt.title('Espectrograma de la Señal de Audio con Fase Modificada')
-    plt.colorbar(label='Intensidad (dB)')
+        plt.xlabel('Tiempo (s)')
+        plt.ylabel('Frecuencia (Hz)')
+        plt.title('Espectrograma de la Señal de Audio con Fase Modificada')
+        plt.colorbar(label='Intensidad (dB)')
 
-    # Muestra el espectrograma modificado en una ventana separada
-    plt.show()
-
-    # save_audio(audio_data_modificado)
+        # Muestra el espectrograma modificado en una ventana separada
+        plt.show()
+    else:
+        print("Primero debes generar el espectrograma original.")
 
 
 
@@ -149,3 +152,5 @@ def save_audio(audio_data_modificado):
     # Guardar el audio modificado en un nuevo archivo WAV
     wavfile.write(r'C:\Users\saulg\Desktop\audio_modificado.wav', sample_rate, audio_data_modificado)
 
+
+     # save_audio(audio_data_modificado)

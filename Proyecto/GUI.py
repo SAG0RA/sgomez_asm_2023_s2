@@ -17,18 +17,18 @@ generate_button.pack(pady=20)
 
 # Botón para manipular la fase del espectrograma
 
-manipulate_button2 = tk.Button(
+manipulate_button1 = tk.Button(
     window, text="Desplazar la Fase", command=manipulate_phase_shift)
-manipulate_button2.pack(pady=10)
+manipulate_button1.pack(pady=10)
 
 
 manipulate_button2 = tk.Button(
     window, text="Fase cuadratica", command=manipulate_phase_cuadratico)
 manipulate_button2.pack(pady=10)
 
-manipulate_button2 = tk.Button(
-    window, text="Fase cuadratica", command=manipulate_phase_flanger)
-manipulate_button2.pack(pady=10)
+manipulate_button3 = tk.Button(
+    window, text="Efecto Flange", command=manipulate_phase_flanger)
+manipulate_button3.pack(pady=10)
 
 # Botón para cerrar la aplicación
 exit_button = tk.Button(window, text="Salir", command=window.quit)
