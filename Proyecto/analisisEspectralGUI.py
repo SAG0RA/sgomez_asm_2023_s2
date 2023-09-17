@@ -42,7 +42,7 @@ def generate_original_spectrogram(file_path):
 def manipulate_phase_shift():
     if original_spec is not None:
         # Calcular el número de muestras a desfasar
-        num_muestras_a_desfasar = int(700 * sample_rate)
+        num_muestras_a_desfasar = int(2000 * sample_rate)
 
     # Crear un nuevo arreglo de audio con el desfase
         audio_data_desfasado = np.roll(audio_data, num_muestras_a_desfasar)
@@ -69,6 +69,7 @@ def manipulate_phase_shift():
 
 
 def manipulate_phase_cuadratico():
+    
     # Crear un vector de desfase cuadrático
     t = np.arange(len(audio_data)) / sample_rate
     cuadratic_phase = 2 * t**2
@@ -120,7 +121,7 @@ def manipulate_phase_flanger():
     overlap = 512
 
     plt.specgram(audio_data_modificado, NFFT=nfft, Fs=sample_rate,
-                 noverlap=overlap, cmap='hot')
+                 noverlap=overlap, cmap='viridis')
     plt.xlabel('Tiempo (s)')
     plt.ylabel('Frecuencia (Hz)')
     plt.title('Espectrograma de la Señal de Audio con Fase Modificada')
@@ -129,7 +130,7 @@ def manipulate_phase_flanger():
     # Muestra el espectrograma modificado en una ventana separada
     plt.show()
 
-    save_audio(audio_data_modificado)
+    # save_audio(audio_data_modificado)
 
 
 
